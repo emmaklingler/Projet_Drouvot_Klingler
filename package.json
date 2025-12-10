@@ -1,0 +1,11 @@
+{
+  "name": "Projet_Drouvot_Klingler",
+  "version": "1.0.0",
+  "description": "",
+  "main": "script.js",
+  "scripts": {
+    "start": "npx http-server -p 3000 -c-1 --cors",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "private": true
+}
