@@ -1,12 +1,92 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-    <meta charset="utf-8">
-    <title>Projet Drouvot Klingler</title>
-
-    <link rel="stylesheet" type="text/css" href="style.css">
+    <meta charset="UTF-8">
+    <title>Appli de vocabulaire – Web Speech</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
+<header>
+    <div class="brand">
+        <span class="logo">🧠</span>
+        <div>
+            <h1>VocabLab</h1>
+            <p>Apprentissage de vocabulaire avec la synthèse vocale</p>
+        </div>
+    </div>
 
+    <div class="toggles">
+        <label class="toggle">
+            Mode
+            <select id="mode-select">
+                <option value="learn">Apprentissage</option>
+                <option value="quiz">Quiz vocal</option>
+            </select>
+        </label>
+
+        <label class="toggle">
+            Thème
+            <select id="theme-select">
+                <option value="animals">Animaux</option>
+                <option value="fruits">Fruits</option>
+                <option value="flags">Drapeaux</option>
+            </select>
+        </label>
+
+        <label class="toggle">
+            Voix
+            <select id="voice-select">
+                <!-- rempli en JS -->
+            </select>
+        </label>
+    </div>
+</header>
+
+<main>
+    <p id="support-msg" class="support-msg"></p>
+
+    <section id="controls-panel">
+        <div class="slider-group">
+            <label>
+                Volume
+                <input type="range" id="volume-slider" min="0" max="1" step="0.1" value="1">
+            </label>
+            <label>
+                Vitesse
+                <input type="range" id="rate-slider" min="0.5" max="2" step="0.1" value="1">
+            </label>
+            <label>
+                Hauteur
+                <input type="range" id="pitch-slider" min="0" max="2" step="0.1" value="1">
+            </label>
+        </div>
+
+        <div class="status-group">
+            <div class="score">
+                Score : <span id="score-value">0</span>
+            </div>
+            <div class="streak">
+                Série : <span id="streak-value">0</span>
+            </div>
+        </div>
+    </section>
+
+    <section id="message-panel">
+        <p id="system-message">
+            Choisis un thème et clique sur une carte pour écouter le mot.
+        </p>
+    </section>
+
+    <section id="cards-grid">
+        <!-- Cartes générées en JavaScript -->
+    </section>
+</main>
+
+<footer>
+    <small>BUT3 RA-IL – Projet Multimédia – Web Speech API</small>
+</footer>
+
+<script src="script.js"></script>
 </body>
 </html>
