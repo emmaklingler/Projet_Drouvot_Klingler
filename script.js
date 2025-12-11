@@ -4,30 +4,32 @@
 
 const THEMES = {
     animaux: [
-        { name: 'chat',       emoji: '🐱', audio: 'chat',       imageQuery: 'cat' },
-        { name: 'chien',      emoji: '🐶', audio: 'chien',      imageQuery: 'dog' },
-        { name: 'oiseau',     emoji: '🐦', audio: 'oiseau',     imageQuery: 'bird' },
-        { name: 'poisson',    emoji: '🐟', audio: 'poisson',    imageQuery: 'fish' },
-        { name: 'éléphant',   emoji: '🐘', audio: 'éléphant',   imageQuery: 'elephant' },
-        { name: 'lion',       emoji: '🦁', audio: 'lion',       imageQuery: 'lion' },
-        { name: 'papillon',   emoji: '🦋', audio: 'papillon',   imageQuery: 'butterfly' },
-        { name: 'abeille',    emoji: '🐝', audio: 'abeille',    imageQuery: 'bee' }
+        { name: 'chat', audio: 'chat', imagePath: 'assets/img/chat.jpg' },
+        { name: 'chien', audio: 'chien', imagePath: 'assets/img/chien.jpg' },
+        { name: 'oiseau', audio: 'oiseau', imagePath: 'assets/img/oiseau.jpg' },
+        { name: 'poisson', audio: 'poisson', imagePath: 'assets/img/poisson.jpg' },
+        { name: 'éléphant', audio: 'éléphant', imagePath: 'assets/img/elephant.jpg' },
+        { name: 'lion', audio: 'lion', imagePath: 'assets/img/lion.jpg' },
+        { name: 'papillon', audio: 'papillon', imagePath: 'assets/img/papillon.jpg' },
+        { name: 'abeille', audio: 'abeille', imagePath: 'assets/img/abeille.jpg' }
     ],
+
     nourriture: [
-        { name: 'pomme',      emoji: '🍎', audio: 'pomme',      imageQuery: 'apple fruit' },
-        { name: 'banane',     emoji: '🍌', audio: 'banane',     imageQuery: 'banana' },
-        { name: 'raisin',     emoji: '🍇', audio: 'raisin',     imageQuery: 'grapes' },
-        { name: 'pizza',      emoji: '🍕', audio: 'pizza',      imageQuery: 'pizza' },
-        { name: 'gâteau',     emoji: '🍰', audio: 'gâteau',     imageQuery: 'cake dessert' },
-        { name: 'carotte',    emoji: '🥕', audio: 'carotte',    imageQuery: 'carrot' }
+        { name: 'pomme', audio: 'pomme', imagePath: 'assets/img/pomme.jpg' },
+        { name: 'banane', audio: 'banane', imagePath: 'assets/img/banane.jpg' },
+        { name: 'raisin', audio: 'raisin', imagePath: 'assets/img/raisin.jpg' },
+        { name: 'pizza', audio: 'pizza', imagePath: 'assets/img/pizza.jpg' },
+        { name: 'gâteau', audio: 'gâteau', imagePath: 'assets/img/gateau.jpg' },
+        { name: 'carotte', audio: 'carotte', imagePath: 'assets/img/carotte.jpg' }
     ],
+
     objets: [
-        { name: 'livre',      emoji: '📖', audio: 'livre',      imageQuery: 'book' },
-        { name: 'ordinateur', emoji: '💻', audio: 'ordinateur', imageQuery: 'laptop computer' },
-        { name: 'téléphone',  emoji: '📱', audio: 'téléphone',  imageQuery: 'smartphone' },
-        { name: 'maison',     emoji: '🏠', audio: 'maison',     imageQuery: 'house' },
-        { name: 'voiture',    emoji: '🚗', audio: 'voiture',    imageQuery: 'car' },
-        { name: 'chaise',     emoji: '🪑', audio: 'chaise',     imageQuery: 'chair' }
+        { name: 'livre', audio: 'livre', imagePath: 'assets/img/livre.jpg' },
+        { name: 'ordinateur', audio: 'ordinateur', imagePath: 'assets/img/ordinateur.jpg' },
+        { name: 'téléphone', audio: 'téléphone', imagePath: 'assets/img/telephone.jpg' },
+        { name: 'maison', audio: 'maison', imagePath: 'assets/img/maison.jpg' },
+        { name: 'voiture', audio: 'voiture', imagePath: 'assets/img/voiture.jpg' },
+        { name: 'chaise', audio: 'chaise', imagePath: 'assets/img/chaise.jpg' }
     ]
 };
 
@@ -35,15 +37,17 @@ const THEMES = {
 // Variables état
 // ===============
 
-let currentMode = 'learn';          // "learn" ou "game"
-let currentThemeKey = 'animaux';    // clé dans THEMES
-let difficulty = 6;                 // nombre de cartes dans le jeu
-let useApiImages = false;           // emoji ou images API
+let currentMode = 'learn';
+let currentThemeKey = 'animaux';
+let difficulty = 6;
 
 let gameScore = 0;
 let bestScore = 0;
-let currentWord = null;             // objet vocab courant pour le jeu
-let currentGameCards = [];          // sous-ensemble utilisé dans la grille de jeu
+let currentWord = null;
+let currentGameCards = [];
+
+let lives = 3;
+let isGameOver = false;
 
 const synth = window.speechSynthesis;
 let voices = [];
@@ -64,11 +68,11 @@ const gameCardsContainer = document.getElementById('game-cards');
 const playSoundBtn       = document.getElementById('playSound');
 const scoreSpan          = document.getElementById('score');
 const bestScoreSpan      = document.getElementById('bestScore');
+const livesSpan          = document.getElementById('lives');
 const feedbackDiv        = document.getElementById('feedback');
 
 const themeSelect        = document.getElementById('themeSelect');
 const difficultySelect   = document.getElementById('difficultySelect');
-const imageModeToggle    = document.getElementById('imageModeToggle');
 
 const voiceSelect        = document.getElementById('voiceSelect');
 const rateSlider         = document.getElementById('rateSlider');
@@ -80,6 +84,9 @@ const supportMsg         = document.getElementById('supportMsg');
 // ===============
 
 document.addEventListener('DOMContentLoaded', () => {
+    // Charge les préférences utilisateur (thème, difficulté)
+    loadUserSettings();
+
     checkSpeechSupport();
     initVoices();
     window.speechSynthesis.onvoiceschanged = initVoices;
@@ -93,17 +100,37 @@ function initializeApp() {
     renderLearningCards();
     renderGameCards();
     updateScoreDisplay();
+    updateLivesDisplay();
 }
 
 // ====================
-// Support / Voix / API
+// Sauvegarde simple
+// ====================
+
+function loadUserSettings() {
+    const savedTheme = localStorage.getItem('vocabTheme');
+    const savedDifficulty = localStorage.getItem('vocabDifficulty');
+
+    if (savedTheme && THEMES[savedTheme]) {
+        currentThemeKey = savedTheme;
+        themeSelect.value = savedTheme;
+    }
+
+    if (savedDifficulty && ['4', '6', '8'].includes(savedDifficulty)) {
+        difficulty = parseInt(savedDifficulty, 10);
+        difficultySelect.value = savedDifficulty;
+    }
+}
+
+// ====================
+// Support / Voix
 // ====================
 
 function checkSpeechSupport() {
     if ('speechSynthesis' in window) {
-        supportMsg.textContent = '✅ Votre navigateur supporte la synthèse vocale.';
+        supportMsg.textContent = ' Votre navigateur supporte la synthèse vocale.';
     } else {
-        supportMsg.textContent = '❌ Désolé, votre navigateur ne supporte pas la synthèse vocale.';
+        supportMsg.textContent = 'Votre navigateur ne supporte pas la synthèse vocale.';
     }
 }
 
@@ -111,16 +138,30 @@ function initVoices() {
     voices = synth.getVoices() || [];
     voiceSelect.innerHTML = '';
 
+    const savedVoiceName = localStorage.getItem('vocabVoice');
+
     voices.forEach((voice) => {
         const option = document.createElement('option');
         option.value = voice.name;
-        option.textContent = `${voice.name} (${voice.lang})${voice.default ? ' [par défaut]' : ''}`;
+        option.textContent = `${voice.name} (${voice.lang})${voice.default ? ' [défaut]' : ''}`;
         voiceSelect.appendChild(option);
     });
 
-    // Voix FR par défaut si possible
-    const frVoice = voices.find(v => v.lang.startsWith('fr'));
-    selectedVoice = frVoice || voices[0] || null;
+    let chosen = null;
+
+    // 1) Si une voix sauvegardée existe encore, on la reprend
+    if (savedVoiceName) {
+        chosen = voices.find(v => v.name === savedVoiceName) || null;
+    }
+
+    // 2) Sinon on essaye une voix FR
+    if (!chosen) {
+        chosen = voices.find(v => v.lang.startsWith('fr')) || null;
+    }
+
+    // 3) Sinon première voix dispo
+    selectedVoice = chosen || voices[0] || null;
+
     if (selectedVoice) {
         voiceSelect.value = selectedVoice.name;
     }
@@ -141,38 +182,31 @@ function setupEventListeners() {
     gameModeBtn.addEventListener('click', () => switchMode('game'));
 
     playSoundBtn.addEventListener('click', () => {
-        if (currentWord) {
-            speakWord(currentWord.audio);
-        }
+        if (currentWord) speakWord(currentWord.audio);
     });
 
     themeSelect.addEventListener('change', () => {
         currentThemeKey = themeSelect.value;
+        localStorage.setItem('vocabTheme', currentThemeKey);
+
         renderLearningCards();
         renderGameCards();
-        if (currentMode === 'game') {
-            startNewGame();
-        }
+        if (currentMode === 'game') startNewGame();
     });
 
     difficultySelect.addEventListener('change', () => {
         difficulty = parseInt(difficultySelect.value, 10);
-        renderGameCards();
-        if (currentMode === 'game') {
-            startNewGame();
-        }
-    });
+        localStorage.setItem('vocabDifficulty', difficultySelect.value);
 
-    imageModeToggle.addEventListener('change', () => {
-        useApiImages = imageModeToggle.checked;
-        renderLearningCards();
         renderGameCards();
+        if (currentMode === 'game') startNewGame();
     });
 
     voiceSelect.addEventListener('change', () => {
-        const name = voiceSelect.value;
-        const found = voices.find(v => v.name === name);
-        if (found) selectedVoice = found;
+        selectedVoice = voices.find(v => v.name === voiceSelect.value);
+        if (selectedVoice) {
+            localStorage.setItem('vocabVoice', selectedVoice.name);
+        }
     });
 
     rateSlider.addEventListener('input', () => {
@@ -187,19 +221,14 @@ function setupEventListeners() {
 function switchMode(mode) {
     currentMode = mode;
 
-    // Boutons
     document.querySelectorAll('.mode-btn').forEach(btn => btn.classList.remove('active'));
     (mode === 'learn' ? learnModeBtn : gameModeBtn).classList.add('active');
 
-    // Sections
-    learningSection.classList.toggle('active', mode === 'learn');
-    gameSection.classList.toggle('active', mode === 'game');
+    // On garde ton système "une page à la fois"
+    learningSection.style.display = (mode === 'learn') ? 'block' : 'none';
+    gameSection.style.display = (mode === 'game') ? 'block' : 'none';
 
-    if (mode === 'game') {
-        startNewGame();
-    } else {
-        clearFeedback();
-    }
+    if (mode === 'game') startNewGame();
 }
 
 // ===================
@@ -208,7 +237,6 @@ function switchMode(mode) {
 
 function getCurrentVocabulary() {
     if (currentThemeKey === 'mix') {
-        // mix des 3 thèmes
         return [
             ...THEMES.animaux,
             ...THEMES.nourriture,
@@ -245,46 +273,29 @@ function createCard(item, clickHandler) {
     const card = document.createElement('div');
     card.className = 'card';
 
-    // Image emoji ou image API
-    let visualEl;
-    if (useApiImages) {
-        const img = document.createElement('img');
-        img.className = 'card-image card-image-img';
-        img.alt = item.name;
-        img.src = buildImageUrl(item.imageQuery || item.name);
+    const img = document.createElement('img');
+    img.className = 'card-image-img';
+    img.alt = item.name;
+    img.src = item.imagePath;
 
-        img.onerror = () => {
-            // fallback : emoji si l'image ne charge pas
-            img.remove();
-            const span = document.createElement('span');
-            span.className = 'card-image card-image-emoji';
-            span.textContent = item.emoji;
-            card.insertBefore(span, card.firstChild);
-        };
-
-        visualEl = img;
-    } else {
-        const span = document.createElement('span');
-        span.className = 'card-image card-image-emoji';
-        span.textContent = item.emoji;
-        visualEl = span;
-    }
+    img.onerror = () => {
+        img.remove();
+        const fallback = document.createElement('div');
+        fallback.textContent = "Image manquante";
+        fallback.style.color = "red";
+        card.appendChild(fallback);
+    };
 
     const nameDiv = document.createElement('div');
     nameDiv.className = 'card-name';
     nameDiv.textContent = item.name;
 
-    card.appendChild(visualEl);
+    card.appendChild(img);
     card.appendChild(nameDiv);
 
     card.addEventListener('click', clickHandler);
 
     return card;
-}
-
-function buildImageUrl(query) {
-    // Simple API publique (sans clé) : Unsplash Source
-    return `https://source.unsplash.com/160x160/?${encodeURIComponent(query)}`;
 }
 
 // ============
@@ -293,7 +304,11 @@ function buildImageUrl(query) {
 
 function startNewGame() {
     gameScore = 0;
+    lives = 3;
+    isGameOver = false;
+
     updateScoreDisplay();
+    updateLivesDisplay();
     clearFeedback();
     resetGameCardStyles();
     selectRandomWord();
@@ -303,13 +318,12 @@ function selectRandomWord() {
     if (!currentGameCards.length) return;
     const index = Math.floor(Math.random() * currentGameCards.length);
     currentWord = currentGameCards[index];
-    clearFeedback();
     resetGameCardStyles();
     speakWord(currentWord.audio);
 }
 
 function handleGameCardClick(selectedItem, cardElement) {
-    if (!currentWord) return;
+    if (!currentWord || isGameOver) return;
 
     if (selectedItem.name === currentWord.name) {
         // Bonne réponse
@@ -322,15 +336,23 @@ function handleGameCardClick(selectedItem, cardElement) {
         setTimeout(() => {
             selectRandomWord();
         }, 1200);
+
     } else {
-        // Mauvaise réponse
+        // Mauvaise réponse → perte de vie
         cardElement.classList.add('incorrect');
-        showFeedback('Essayez encore !', 'incorrect');
+        lives--;
+        updateLivesDisplay();
+        showFeedback(`Raté ! Il reste ${lives} vie(s)`, 'incorrect');
         speakText('Essayez encore', 'fr-FR');
+
+        if (lives <= 0) {
+            gameOver();
+            return;
+        }
 
         setTimeout(() => {
             cardElement.classList.remove('incorrect');
-        }, 800);
+        }, 700);
     }
 }
 
@@ -343,6 +365,30 @@ function updateScoreDisplay() {
     bestScoreSpan.textContent = `Record : ${bestScore}`;
 }
 
+function updateLivesDisplay() {
+    livesSpan.textContent = `Vies : ${lives}`;
+}
+
+function gameOver() {
+    isGameOver = true;
+
+    feedbackDiv.className = '';
+    feedbackDiv.classList.add('feedback-incorrect');
+    feedbackDiv.innerHTML = `
+        GAME OVER !<br>
+        <button id="restartBtn">Rejouer</button>
+    `;
+
+    const restartBtn = document.getElementById('restartBtn');
+    if (restartBtn) {
+        restartBtn.addEventListener('click', () => {
+            startNewGame();
+        });
+    }
+
+    speakText("Fin de la partie", "fr-FR");
+}
+
 function resetGameCardStyles() {
     document.querySelectorAll('#game-cards .card').forEach(card => {
         card.classList.remove('correct', 'incorrect');
@@ -352,11 +398,8 @@ function resetGameCardStyles() {
 function showFeedback(message, type) {
     feedbackDiv.textContent = message;
     feedbackDiv.className = '';
-    if (type === 'correct') {
-        feedbackDiv.classList.add('feedback-correct');
-    } else if (type === 'incorrect') {
-        feedbackDiv.classList.add('feedback-incorrect');
-    }
+    if (type === 'correct') feedbackDiv.classList.add('feedback-correct');
+    if (type === 'incorrect') feedbackDiv.classList.add('feedback-incorrect');
 }
 
 function clearFeedback() {
@@ -375,9 +418,7 @@ function speakWord(word) {
 function speakText(text, lang) {
     if (!('speechSynthesis' in window)) return;
 
-    if (synth.speaking) {
-        synth.cancel();
-    }
+    if (synth.speaking) synth.cancel();
 
     const utterance = new SpeechSynthesisUtterance(text);
     utterance.lang = lang;
