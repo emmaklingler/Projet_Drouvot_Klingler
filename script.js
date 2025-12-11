@@ -1,35 +1,220 @@
 // =======================
 // Données : thèmes & mots
 // =======================
+//
+// name = clé interne (sert pour la logique du jeu)
+// imagePath = ton image locale
+// translations = mot à afficher / prononcer dans chaque langue
+//
 
 const THEMES = {
     animaux: [
-        { name: 'chat', audio: 'chat', imagePath: 'assets/img/chat.jpg' },
-        { name: 'chien', audio: 'chien', imagePath: 'assets/img/chien.jpg' },
-        { name: 'oiseau', audio: 'oiseau', imagePath: 'assets/img/oiseau.jpg' },
-        { name: 'poisson', audio: 'poisson', imagePath: 'assets/img/poisson.jpg' },
-        { name: 'éléphant', audio: 'éléphant', imagePath: 'assets/img/elephant.jpg' },
-        { name: 'lion', audio: 'lion', imagePath: 'assets/img/lion.jpg' },
-        { name: 'papillon', audio: 'papillon', imagePath: 'assets/img/papillon.jpg' },
-        { name: 'abeille', audio: 'abeille', imagePath: 'assets/img/abeille.jpg' }
+        {
+            name: 'chat',
+            imagePath: 'assets/img/chat.jpg',
+            translations: {
+                fr: 'chat',
+                en: 'cat',
+                es: 'gato',
+                de: 'Katze'
+            }
+        },
+        {
+            name: 'chien',
+            imagePath: 'assets/img/chien.jpg',
+            translations: {
+                fr: 'chien',
+                en: 'dog',
+                es: 'perro',
+                de: 'Hund'
+            }
+        },
+        {
+            name: 'oiseau',
+            imagePath: 'assets/img/oiseau.jpg',
+            translations: {
+                fr: 'oiseau',
+                en: 'bird',
+                es: 'pájaro',
+                de: 'Vogel'
+            }
+        },
+        {
+            name: 'poisson',
+            imagePath: 'assets/img/poisson.jpg',
+            translations: {
+                fr: 'poisson',
+                en: 'fish',
+                es: 'pez',
+                de: 'Fisch'
+            }
+        },
+        {
+            name: 'éléphant',
+            imagePath: 'assets/img/elephant.jpg',
+            translations: {
+                fr: 'éléphant',
+                en: 'elephant',
+                es: 'elefante',
+                de: 'Elefant'
+            }
+        },
+        {
+            name: 'lion',
+            imagePath: 'assets/img/lion.jpg',
+            translations: {
+                fr: 'lion',
+                en: 'lion',
+                es: 'león',
+                de: 'Löwe'
+            }
+        },
+        {
+            name: 'papillon',
+            imagePath: 'assets/img/papillon.jpg',
+            translations: {
+                fr: 'papillon',
+                en: 'butterfly',
+                es: 'mariposa',
+                de: 'Schmetterling'
+            }
+        },
+        {
+            name: 'abeille',
+            imagePath: 'assets/img/abeille.jpg',
+            translations: {
+                fr: 'abeille',
+                en: 'bee',
+                es: 'abeja',
+                de: 'Biene'
+            }
+        }
     ],
 
     nourriture: [
-        { name: 'pomme', audio: 'pomme', imagePath: 'assets/img/pomme.jpg' },
-        { name: 'banane', audio: 'banane', imagePath: 'assets/img/banane.jpg' },
-        { name: 'raisin', audio: 'raisin', imagePath: 'assets/img/raisin.jpg' },
-        { name: 'pizza', audio: 'pizza', imagePath: 'assets/img/pizza.jpg' },
-        { name: 'gâteau', audio: 'gâteau', imagePath: 'assets/img/gateau.jpg' },
-        { name: 'carotte', audio: 'carotte', imagePath: 'assets/img/carotte.jpg' }
+        {
+            name: 'pomme',
+            imagePath: 'assets/img/pomme.jpg',
+            translations: {
+                fr: 'pomme',
+                en: 'apple',
+                es: 'manzana',
+                de: 'Apfel'
+            }
+        },
+        {
+            name: 'banane',
+            imagePath: 'assets/img/banane.jpg',
+            translations: {
+                fr: 'banane',
+                en: 'banana',
+                es: 'plátano',
+                de: 'Banane'
+            }
+        },
+        {
+            name: 'raisin',
+            imagePath: 'assets/img/raisin.jpg',
+            translations: {
+                fr: 'raisin',
+                en: 'grapes',
+                es: 'uvas',
+                de: 'Trauben'
+            }
+        },
+        {
+            name: 'pizza',
+            imagePath: 'assets/img/pizza.jpg',
+            translations: {
+                fr: 'pizza',
+                en: 'pizza',
+                es: 'pizza',
+                de: 'Pizza'
+            }
+        },
+        {
+            name: 'gâteau',
+            imagePath: 'assets/img/gateau.jpg',
+            translations: {
+                fr: 'gâteau',
+                en: 'cake',
+                es: 'pastel',
+                de: 'Kuchen'
+            }
+        },
+        {
+            name: 'carotte',
+            imagePath: 'assets/img/carotte.jpg',
+            translations: {
+                fr: 'carotte',
+                en: 'carrot',
+                es: 'zanahoria',
+                de: 'Karotte'
+            }
+        }
     ],
 
     objets: [
-        { name: 'livre', audio: 'livre', imagePath: 'assets/img/livre.jpg' },
-        { name: 'ordinateur', audio: 'ordinateur', imagePath: 'assets/img/ordinateur.jpg' },
-        { name: 'téléphone', audio: 'téléphone', imagePath: 'assets/img/telephone.jpg' },
-        { name: 'maison', audio: 'maison', imagePath: 'assets/img/maison.jpg' },
-        { name: 'voiture', audio: 'voiture', imagePath: 'assets/img/voiture.jpg' },
-        { name: 'chaise', audio: 'chaise', imagePath: 'assets/img/chaise.jpg' }
+        {
+            name: 'livre',
+            imagePath: 'assets/img/livre.jpg',
+            translations: {
+                fr: 'livre',
+                en: 'book',
+                es: 'libro',
+                de: 'Buch'
+            }
+        },
+        {
+            name: 'ordinateur',
+            imagePath: 'assets/img/ordinateur.jpg',
+            translations: {
+                fr: 'ordinateur',
+                en: 'computer',
+                es: 'ordenador',
+                de: 'Computer'
+            }
+        },
+        {
+            name: 'téléphone',
+            imagePath: 'assets/img/telephone.jpg',
+            translations: {
+                fr: 'téléphone',
+                en: 'phone',
+                es: 'teléfono',
+                de: 'Telefon'
+            }
+        },
+        {
+            name: 'maison',
+            imagePath: 'assets/img/maison.jpg',
+            translations: {
+                fr: 'maison',
+                en: 'house',
+                es: 'casa',
+                de: 'Haus'
+            }
+        },
+        {
+            name: 'voiture',
+            imagePath: 'assets/img/voiture.jpg',
+            translations: {
+                fr: 'voiture',
+                en: 'car',
+                es: 'coche',
+                de: 'Auto'
+            }
+        },
+        {
+            name: 'chaise',
+            imagePath: 'assets/img/chaise.jpg',
+            translations: {
+                fr: 'chaise',
+                en: 'chair',
+                es: 'silla',
+                de: 'Stuhl'
+            }
+        }
     ]
 };
 
@@ -37,21 +222,22 @@ const THEMES = {
 // Variables état
 // ===============
 
-let currentMode = 'learn';
-let currentThemeKey = 'animaux';
-let difficulty = 6;
+let currentMode       = 'learn';     // "learn" ou "game"
+let currentThemeKey   = 'animaux';   // clé dans THEMES
+let difficulty        = 6;           // 4 / 6 / 8
+let currentLanguage   = 'fr';        // 'fr' | 'en' | 'es' | 'de'
 
-let gameScore = 0;
-let bestScore = 0;
-let currentWord = null;
-let currentGameCards = [];
+let gameScore         = 0;
+let bestScore         = 0;
+let lives             = 3;
+let isGameOver        = false;
 
-let lives = 3;
-let isGameOver = false;
+let currentWord       = null;        // objet utilisé dans le jeu
+let currentGameCards  = [];
 
-const synth = window.speechSynthesis;
-let voices = [];
-let selectedVoice = null;
+const synth           = window.speechSynthesis;
+let voices            = [];
+let selectedVoice     = null;
 
 // ==================
 // Récup éléments DOM
@@ -73,6 +259,7 @@ const feedbackDiv        = document.getElementById('feedback');
 
 const themeSelect        = document.getElementById('themeSelect');
 const difficultySelect   = document.getElementById('difficultySelect');
+const languageSelect     = document.getElementById('languageSelect');
 
 const voiceSelect        = document.getElementById('voiceSelect');
 const rateSlider         = document.getElementById('rateSlider');
@@ -84,7 +271,6 @@ const supportMsg         = document.getElementById('supportMsg');
 // ===============
 
 document.addEventListener('DOMContentLoaded', () => {
-    // Charge les préférences utilisateur (thème, difficulté)
     loadUserSettings();
 
     checkSpeechSupport();
@@ -108,8 +294,9 @@ function initializeApp() {
 // ====================
 
 function loadUserSettings() {
-    const savedTheme = localStorage.getItem('vocabTheme');
+    const savedTheme      = localStorage.getItem('vocabTheme');
     const savedDifficulty = localStorage.getItem('vocabDifficulty');
+    const savedLanguage   = localStorage.getItem('vocabLang');
 
     if (savedTheme && THEMES[savedTheme]) {
         currentThemeKey = savedTheme;
@@ -120,6 +307,14 @@ function loadUserSettings() {
         difficulty = parseInt(savedDifficulty, 10);
         difficultySelect.value = savedDifficulty;
     }
+
+    if (savedLanguage && ['fr', 'en', 'es', 'de'].includes(savedLanguage)) {
+        currentLanguage = savedLanguage;
+        languageSelect.value = savedLanguage;
+    } else {
+        currentLanguage = 'fr';
+        languageSelect.value = 'fr';
+    }
 }
 
 // ====================
@@ -128,7 +323,7 @@ function loadUserSettings() {
 
 function checkSpeechSupport() {
     if ('speechSynthesis' in window) {
-        supportMsg.textContent = ' Votre navigateur supporte la synthèse vocale.';
+        supportMsg.textContent = 'Votre navigateur supporte la synthèse vocale.';
     } else {
         supportMsg.textContent = 'Votre navigateur ne supporte pas la synthèse vocale.';
     }
@@ -149,17 +344,18 @@ function initVoices() {
 
     let chosen = null;
 
-    // 1) Si une voix sauvegardée existe encore, on la reprend
     if (savedVoiceName) {
         chosen = voices.find(v => v.name === savedVoiceName) || null;
     }
 
-    // 2) Sinon on essaye une voix FR
     if (!chosen) {
-        chosen = voices.find(v => v.lang.startsWith('fr')) || null;
+        // on essaie de trouver une voix dans la langue courante
+        const targetLang = getSpeechLangFor(currentLanguage);
+        chosen = voices.find(v => v.lang === targetLang) ||
+            voices.find(v => v.lang.startsWith(currentLanguage)) ||
+            null;
     }
 
-    // 3) Sinon première voix dispo
     selectedVoice = chosen || voices[0] || null;
 
     if (selectedVoice) {
@@ -182,7 +378,10 @@ function setupEventListeners() {
     gameModeBtn.addEventListener('click', () => switchMode('game'));
 
     playSoundBtn.addEventListener('click', () => {
-        if (currentWord) speakWord(currentWord.audio);
+        if (currentWord) {
+            const label = getWordForCurrentLanguage(currentWord);
+            speakWord(label);
+        }
     });
 
     themeSelect.addEventListener('change', () => {
@@ -200,6 +399,15 @@ function setupEventListeners() {
 
         renderGameCards();
         if (currentMode === 'game') startNewGame();
+    });
+
+    languageSelect.addEventListener('change', () => {
+        currentLanguage = languageSelect.value;
+        localStorage.setItem('vocabLang', currentLanguage);
+
+        // On relit l'interface dans la nouvelle langue
+        renderLearningCards();
+        renderGameCards();
     });
 
     voiceSelect.addEventListener('change', () => {
@@ -224,9 +432,8 @@ function switchMode(mode) {
     document.querySelectorAll('.mode-btn').forEach(btn => btn.classList.remove('active'));
     (mode === 'learn' ? learnModeBtn : gameModeBtn).classList.add('active');
 
-    // On garde ton système "une page à la fois"
     learningSection.style.display = (mode === 'learn') ? 'block' : 'none';
-    gameSection.style.display = (mode === 'game') ? 'block' : 'none';
+    gameSection.style.display     = (mode === 'game')  ? 'block' : 'none';
 
     if (mode === 'game') startNewGame();
 }
@@ -246,12 +453,25 @@ function getCurrentVocabulary() {
     return THEMES[currentThemeKey];
 }
 
+function getWordForCurrentLanguage(item) {
+    if (item.translations && item.translations[currentLanguage]) {
+        return item.translations[currentLanguage];
+    }
+    if (item.translations && item.translations.fr) {
+        return item.translations.fr;
+    }
+    return item.name;
+}
+
 function renderLearningCards() {
     const vocab = getCurrentVocabulary();
     cardsContainer.innerHTML = '';
 
     vocab.forEach(item => {
-        const card = createCard(item, () => speakWord(item.audio));
+        const card = createCard(item, () => {
+            const label = getWordForCurrentLanguage(item);
+            speakWord(label);
+        });
         cardsContainer.appendChild(card);
     });
 }
@@ -281,14 +501,14 @@ function createCard(item, clickHandler) {
     img.onerror = () => {
         img.remove();
         const fallback = document.createElement('div');
-        fallback.textContent = "Image manquante";
-        fallback.style.color = "red";
+        fallback.textContent = 'Image manquante';
+        fallback.style.color = 'red';
         card.appendChild(fallback);
     };
 
     const nameDiv = document.createElement('div');
     nameDiv.className = 'card-name';
-    nameDiv.textContent = item.name;
+    nameDiv.textContent = getWordForCurrentLanguage(item);
 
     card.appendChild(img);
     card.appendChild(nameDiv);
@@ -303,8 +523,8 @@ function createCard(item, clickHandler) {
 // ============
 
 function startNewGame() {
-    gameScore = 0;
-    lives = 3;
+    gameScore  = 0;
+    lives      = 3;
     isGameOver = false;
 
     updateScoreDisplay();
@@ -319,7 +539,9 @@ function selectRandomWord() {
     const index = Math.floor(Math.random() * currentGameCards.length);
     currentWord = currentGameCards[index];
     resetGameCardStyles();
-    speakWord(currentWord.audio);
+
+    const label = getWordForCurrentLanguage(currentWord);
+    speakWord(label);
 }
 
 function handleGameCardClick(selectedItem, cardElement) {
@@ -386,7 +608,7 @@ function gameOver() {
         });
     }
 
-    speakText("Fin de la partie", "fr-FR");
+    speakText('Fin de la partie', 'fr-FR');
 }
 
 function resetGameCardStyles() {
@@ -411,8 +633,9 @@ function clearFeedback() {
 // Synthèse vocale
 // =====================
 
-function speakWord(word) {
-    speakText(word, 'fr-FR');
+function speakWord(text) {
+    const lang = getSpeechLangFor(currentLanguage);
+    speakText(text, lang);
 }
 
 function speakText(text, lang) {
@@ -429,6 +652,15 @@ function speakText(text, lang) {
     }
 
     synth.speak(utterance);
+}
+
+function getSpeechLangFor(langCode) {
+    switch (langCode) {
+        case 'en': return 'en-US';
+        case 'es': return 'es-ES';
+        case 'de': return 'de-DE';
+        default:   return 'fr-FR';
+    }
 }
 
 // =====================

@@ -214,6 +214,18 @@ h2 {
 #restartBtn:hover {
     background: #fdd835;
 }
+#recordPronunciation {
+    padding: 6px 12px;
+    font-weight: bold;
+    background: #ff9800;   /* orange bien vif */
+    border: 2px solid #000;
+    cursor: pointer;
+    margin-left: 5px;
+}
+
+#recordPronunciation:hover {
+    background: #fb8c00;
+}
 
 
 /* ============================
