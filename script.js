@@ -1,12 +1,3 @@
-// =======================
-// Données : thèmes & mots
-// =======================
-//
-// name = clé interne (sert pour la logique du jeu)
-// imagePath = ton image locale
-// translations = mot à afficher / prononcer dans chaque langue
-//
-
 const THEMES = {
     animaux: [
         {
@@ -218,13 +209,9 @@ const THEMES = {
     ]
 };
 
-// ===============
-// Variables état
-// ===============
-
-let currentMode       = 'learn';     // "learn" ou "game"
-let currentThemeKey   = 'animaux';   // clé dans THEMES
-let difficulty        = 6;           // 4 / 6 / 8
+let currentMode       = 'learn';
+let currentThemeKey   = 'animaux';
+let difficulty        = 6;
 let currentLanguage   = 'fr';        // 'fr' | 'en' | 'es' | 'de'
 
 let gameScore         = 0;
@@ -232,16 +219,12 @@ let bestScore         = 0;
 let lives             = 3;
 let isGameOver        = false;
 
-let currentWord       = null;        // objet utilisé dans le jeu
+let currentWord       = null;
 let currentGameCards  = [];
 
 const synth           = window.speechSynthesis;
 let voices            = [];
 let selectedVoice     = null;
-
-// ==================
-// Récup éléments DOM
-// ==================
 
 const learnModeBtn       = document.getElementById('learnMode');
 const gameModeBtn        = document.getElementById('gameMode');
@@ -266,10 +249,6 @@ const rateSlider         = document.getElementById('rateSlider');
 const rateValue          = document.getElementById('rateValue');
 const supportMsg         = document.getElementById('supportMsg');
 
-// ===============
-// Initialisation
-// ===============
-
 document.addEventListener('DOMContentLoaded', () => {
     loadUserSettings();
 
@@ -288,10 +267,6 @@ function initializeApp() {
     updateScoreDisplay();
     updateLivesDisplay();
 }
-
-// ====================
-// Sauvegarde simple
-// ====================
 
 function loadUserSettings() {
     const savedTheme      = localStorage.getItem('vocabTheme');
@@ -316,10 +291,6 @@ function loadUserSettings() {
         languageSelect.value = 'fr';
     }
 }
-
-// ====================
-// Support / Voix
-// ====================
 
 function checkSpeechSupport() {
     if ('speechSynthesis' in window) {
@@ -368,10 +339,6 @@ function loadBestScore() {
     bestScore = stored ? parseInt(stored, 10) : 0;
     bestScoreSpan.textContent = `Record : ${bestScore}`;
 }
-
-// ==========================
-// Gestion des événements UI
-// ==========================
 
 function setupEventListeners() {
     learnModeBtn.addEventListener('click', () => switchMode('learn'));
@@ -422,10 +389,6 @@ function setupEventListeners() {
     });
 }
 
-// =================
-// Changement modes
-// =================
-
 function switchMode(mode) {
     currentMode = mode;
 
@@ -437,10 +400,6 @@ function switchMode(mode) {
 
     if (mode === 'game') startNewGame();
 }
-
-// ===================
-// Rendu des cartes UI
-// ===================
 
 function getCurrentVocabulary() {
     if (currentThemeKey === 'mix') {
@@ -518,10 +477,6 @@ function createCard(item, clickHandler) {
     return card;
 }
 
-// ============
-// Mode "Jeu"
-// ============
-
 function startNewGame() {
     gameScore  = 0;
     lives      = 3;
@@ -560,7 +515,7 @@ function handleGameCardClick(selectedItem, cardElement) {
         }, 1200);
 
     } else {
-        // Mauvaise réponse → perte de vie
+        // Mauvaise réponse  = perte de vie
         cardElement.classList.add('incorrect');
         lives--;
         updateLivesDisplay();
@@ -629,10 +584,6 @@ function clearFeedback() {
     feedbackDiv.className = '';
 }
 
-// =====================
-// Synthèse vocale
-// =====================
-
 function speakWord(text) {
     const lang = getSpeechLangFor(currentLanguage);
     speakText(text, lang);
@@ -662,10 +613,6 @@ function getSpeechLangFor(langCode) {
         default:   return 'fr-FR';
     }
 }
-
-// =====================
-// Helpers utilitaires
-// =====================
 
 function shuffleArray(array) {
     for (let i = array.length - 1; i > 0; i--) {
