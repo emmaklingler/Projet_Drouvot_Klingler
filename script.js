@@ -1,213 +1,4 @@
-const THEMES = {
-    animaux: [
-        {
-            name: 'chat',
-            imagePath: 'assets/img/chat.jpg',
-            translations: {
-                fr: 'chat',
-                en: 'cat',
-                es: 'gato',
-                de: 'Katze'
-            }
-        },
-        {
-            name: 'chien',
-            imagePath: 'assets/img/chien.jpg',
-            translations: {
-                fr: 'chien',
-                en: 'dog',
-                es: 'perro',
-                de: 'Hund'
-            }
-        },
-        {
-            name: 'oiseau',
-            imagePath: 'assets/img/oiseau.jpg',
-            translations: {
-                fr: 'oiseau',
-                en: 'bird',
-                es: 'pájaro',
-                de: 'Vogel'
-            }
-        },
-        {
-            name: 'poisson',
-            imagePath: 'assets/img/poisson.jpg',
-            translations: {
-                fr: 'poisson',
-                en: 'fish',
-                es: 'pez',
-                de: 'Fisch'
-            }
-        },
-        {
-            name: 'éléphant',
-            imagePath: 'assets/img/elephant.jpg',
-            translations: {
-                fr: 'éléphant',
-                en: 'elephant',
-                es: 'elefante',
-                de: 'Elefant'
-            }
-        },
-        {
-            name: 'lion',
-            imagePath: 'assets/img/lion.jpg',
-            translations: {
-                fr: 'lion',
-                en: 'lion',
-                es: 'león',
-                de: 'Löwe'
-            }
-        },
-        {
-            name: 'papillon',
-            imagePath: 'assets/img/papillon.jpg',
-            translations: {
-                fr: 'papillon',
-                en: 'butterfly',
-                es: 'mariposa',
-                de: 'Schmetterling'
-            }
-        },
-        {
-            name: 'abeille',
-            imagePath: 'assets/img/abeille.jpg',
-            translations: {
-                fr: 'abeille',
-                en: 'bee',
-                es: 'abeja',
-                de: 'Biene'
-            }
-        }
-    ],
-
-    nourriture: [
-        {
-            name: 'pomme',
-            imagePath: 'assets/img/pomme.jpg',
-            translations: {
-                fr: 'pomme',
-                en: 'apple',
-                es: 'manzana',
-                de: 'Apfel'
-            }
-        },
-        {
-            name: 'banane',
-            imagePath: 'assets/img/banane.jpg',
-            translations: {
-                fr: 'banane',
-                en: 'banana',
-                es: 'plátano',
-                de: 'Banane'
-            }
-        },
-        {
-            name: 'raisin',
-            imagePath: 'assets/img/raisin.jpg',
-            translations: {
-                fr: 'raisin',
-                en: 'grapes',
-                es: 'uvas',
-                de: 'Trauben'
-            }
-        },
-        {
-            name: 'pizza',
-            imagePath: 'assets/img/pizza.jpg',
-            translations: {
-                fr: 'pizza',
-                en: 'pizza',
-                es: 'pizza',
-                de: 'Pizza'
-            }
-        },
-        {
-            name: 'gâteau',
-            imagePath: 'assets/img/gateau.jpg',
-            translations: {
-                fr: 'gâteau',
-                en: 'cake',
-                es: 'pastel',
-                de: 'Kuchen'
-            }
-        },
-        {
-            name: 'carotte',
-            imagePath: 'assets/img/carotte.jpg',
-            translations: {
-                fr: 'carotte',
-                en: 'carrot',
-                es: 'zanahoria',
-                de: 'Karotte'
-            }
-        }
-    ],
-
-    objets: [
-        {
-            name: 'livre',
-            imagePath: 'assets/img/livre.jpg',
-            translations: {
-                fr: 'livre',
-                en: 'book',
-                es: 'libro',
-                de: 'Buch'
-            }
-        },
-        {
-            name: 'ordinateur',
-            imagePath: 'assets/img/ordinateur.jpg',
-            translations: {
-                fr: 'ordinateur',
-                en: 'computer',
-                es: 'ordenador',
-                de: 'Computer'
-            }
-        },
-        {
-            name: 'téléphone',
-            imagePath: 'assets/img/telephone.jpg',
-            translations: {
-                fr: 'téléphone',
-                en: 'phone',
-                es: 'teléfono',
-                de: 'Telefon'
-            }
-        },
-        {
-            name: 'maison',
-            imagePath: 'assets/img/maison.jpg',
-            translations: {
-                fr: 'maison',
-                en: 'house',
-                es: 'casa',
-                de: 'Haus'
-            }
-        },
-        {
-            name: 'voiture',
-            imagePath: 'assets/img/voiture.jpg',
-            translations: {
-                fr: 'voiture',
-                en: 'car',
-                es: 'coche',
-                de: 'Auto'
-            }
-        },
-        {
-            name: 'chaise',
-            imagePath: 'assets/img/chaise.jpg',
-            translations: {
-                fr: 'chaise',
-                en: 'chair',
-                es: 'silla',
-                de: 'Stuhl'
-            }
-        }
-    ]
-};
+let THEMES = {};
 
 let currentMode       = 'learn';
 let currentThemeKey   = 'animaux';
@@ -249,17 +40,25 @@ const rateSlider         = document.getElementById('rateSlider');
 const rateValue          = document.getElementById('rateValue');
 const supportMsg         = document.getElementById('supportMsg');
 
-document.addEventListener('DOMContentLoaded', () => {
+document.addEventListener('DOMContentLoaded', async () => {
+    await loadVocabulary();
     loadUserSettings();
-
     checkSpeechSupport();
     initVoices();
     window.speechSynthesis.onvoiceschanged = initVoices;
-
     loadBestScore();
     initializeApp();
     setupEventListeners();
 });
+
+async function loadVocabulary() {
+    try {
+        const response = await fetch('vocab.json');
+        THEMES = await response.json();
+    } catch (error) {
+        console.error('Erreur lors du chargement du vocabulaire:', error);
+    }
+}
 
 function initializeApp() {
     renderLearningCards();
