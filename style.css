@@ -1,50 +1,55 @@
+/* --------- Reset simple --------- */
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
 }
 
+/* --------- Page globale --------- */
 body {
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-    min-height: 100vh;
-    color: #333;
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    background: #f3f4f6;
+    color: #1f2933;
 }
 
+/* --------- Conteneur principal --------- */
 .container {
-    max-width: 1200px;
-    margin: 0 auto;
-    padding: 20px;
+    max-width: 1100px;
+    margin: 24px auto;
+    padding: 16px;
 }
 
+/* --------- Header --------- */
 header {
     text-align: center;
     margin-bottom: 20px;
 }
 
 h1 {
-    color: white;
-    font-size: 2.2rem;
-    margin-bottom: 15px;
-    text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+    font-size: 2rem;
+    color: #111827;
+    margin-bottom: 8px;
 }
 
-/* Barre du haut (thème, difficulté, images) */
+header small {
+    font-size: 0.85rem;
+    color: #6b7280;
+}
 
+/* --------- Barre du haut (thème / difficulté / images) --------- */
 .top-bar {
+    margin-top: 12px;
     display: flex;
-    justify-content: center;
     flex-wrap: wrap;
-    gap: 15px;
-    margin-bottom: 15px;
+    justify-content: center;
+    gap: 12px;
 }
 
 .group {
     display: flex;
     flex-direction: column;
-    align-items: flex-start;
     font-size: 0.9rem;
-    color: #f5f5f5;
+    color: #374151;
 }
 
 .group label {
@@ -54,8 +59,16 @@ h1 {
 select {
     padding: 4px 8px;
     border-radius: 6px;
-    border: 1px solid #ddd;
+    border: 1px solid #d1d5db;
     font-size: 0.9rem;
+    background: #ffffff;
+    min-width: 140px;
+}
+
+select:focus {
+    outline: none;
+    border-color: #2563eb;
+    box-shadow: 0 0 0 2px rgba(37, 99, 235, 0.25);
 }
 
 .switch-label {
@@ -64,65 +77,78 @@ select {
     gap: 6px;
 }
 
-/* Boutons mode */
-
+/* --------- Boutons de mode --------- */
 .mode-selector {
+    margin-top: 14px;
     display: flex;
     justify-content: center;
-    gap: 10px;
-    margin-top: 10px;
+    gap: 8px;
 }
 
 .mode-btn {
-    padding: 10px 20px;
-    border: none;
-    border-radius: 25px;
-    background: rgba(255,255,255,0.2);
-    color: white;
+    padding: 8px 16px;
+    border-radius: 999px;
+    border: 1px solid #d1d5db;
+    background: #e5e7eb;
     font-size: 0.95rem;
     cursor: pointer;
-    transition: all 0.3s ease;
+    transition: background 0.15s ease, color 0.15s ease, transform 0.1s ease, box-shadow 0.15s ease;
 }
 
 .mode-btn:hover {
-    background: rgba(255,255,255,0.3);
-    transform: translateY(-2px);
+    background: #d1d5db;
+    transform: translateY(-1px);
+    box-shadow: 0 2px 6px rgba(15, 23, 42, 0.12);
 }
 
 .mode-btn.active {
-    background: white;
-    color: #667eea;
-    font-weight: bold;
+    background: #2563eb;
+    color: #ffffff;
+    border-color: #2563eb;
+    box-shadow: 0 2px 8px rgba(37, 99, 235, 0.35);
 }
 
-/* Panneau voix */
-
+/* --------- Panneau voix --------- */
 .voice-panel {
-    margin-top: 20px;
-    margin-bottom: 20px;
-    padding: 10px 15px;
-    background: rgba(255,255,255,0.9);
+    margin-top: 18px;
+    margin-bottom: 18px;
+    padding: 10px 14px;
     border-radius: 12px;
+    background: #ffffff;
+    border: 1px solid #e5e7eb;
     display: flex;
     flex-wrap: wrap;
-    gap: 15px;
+    gap: 12px;
     align-items: center;
     justify-content: space-between;
 }
 
-.support-msg {
-    font-size: 0.8rem;
-    color: #666;
+.voice-panel .group {
+    color: #111827;
 }
 
-/* Sections */
+#rateSlider {
+    width: 140px;
+}
 
+#rateValue {
+    font-weight: 600;
+    margin-left: 6px;
+}
+
+.support-msg {
+    font-size: 0.8rem;
+    color: #6b7280;
+}
+
+/* --------- Sections principales --------- */
 .section {
     display: none;
-    background: white;
-    border-radius: 20px;
-    padding: 25px;
-    box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+    background: #ffffff;
+    border-radius: 14px;
+    padding: 20px 18px 22px;
+    border: 1px solid #e5e7eb;
+    box-shadow: 0 8px 18px rgba(15, 23, 42, 0.06);
     margin-bottom: 20px;
 }
 
@@ -131,151 +157,142 @@ select {
 }
 
 h2 {
+    font-size: 1.3rem;
     text-align: center;
-    margin-bottom: 25px;
-    color: #667eea;
-    font-size: 1.4rem;
+    margin-bottom: 18px;
+    color: #111827;
 }
 
-/* Grille de cartes */
-
+/* --------- Grille de cartes --------- */
 .cards-grid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
-    gap: 20px;
+    gap: 14px;
 }
 
-/* Carte */
-
+/* --------- Carte --------- */
 .card {
-    background: white;
-    border-radius: 15px;
-    padding: 18px;
+    border-radius: 12px;
+    border: 1px solid #e5e7eb;
+    background: #f9fafb;
+    padding: 12px 10px;
     text-align: center;
     cursor: pointer;
-    transition: all 0.3s ease;
-    border: 3px solid #f0f0f0;
-    box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+    transition: transform 0.12s ease, box-shadow 0.12s ease, border-color 0.12s ease, background 0.12s ease;
 }
 
 .card:hover {
-    transform: translateY(-4px);
-    box-shadow: 0 8px 25px rgba(0,0,0,0.2);
-    border-color: #667eea;
+    transform: translateY(-2px);
+    box-shadow: 0 6px 14px rgba(15, 23, 42, 0.15);
+    border-color: #2563eb;
+    background: #ffffff;
 }
 
 .card.correct {
-    border-color: #4CAF50;
-    background: #f8fff8;
+    border-color: #16a34a;
+    background: #ecfdf3;
 }
 
 .card.incorrect {
-    border-color: #f44336;
-    background: #fff8f8;
-    animation: shake 0.3s;
+    border-color: #dc2626;
+    background: #fef2f2;
 }
 
-@keyframes shake {
-    0%, 100% { transform: translateX(0); }
-    25% { transform: translateX(-4px); }
-    75% { transform: translateX(4px); }
-}
-
-/* Visuels (emoji ou image) */
-
+/* --------- Contenu visuel des cartes --------- */
 .card-image {
     display: block;
-    margin: 0 auto 12px auto;
+    margin: 0 auto 6px auto;
 }
 
 .card-image-emoji {
-    font-size: 3rem;
+    font-size: 2.4rem;
 }
 
 .card-image-img {
-    width: 80px;
-    height: 80px;
+    width: 70px;
+    height: 70px;
     object-fit: cover;
     border-radius: 8px;
-    border: 1px solid #ddd;
+    border: 1px solid #d1d5db;
 }
 
 .card-name {
-    font-size: 1rem;
-    font-weight: bold;
-    color: #333;
+    font-size: 0.95rem;
+    font-weight: 600;
+    color: #111827;
 }
 
-/* Zone jeu */
-
+/* --------- Zone de jeu --------- */
 .game-controls {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin-bottom: 15px;
-    padding: 12px 15px;
-    background: #f8f9fa;
-    border-radius: 12px;
+    gap: 12px;
+    padding: 10px 12px;
+    margin-bottom: 12px;
+    border-radius: 10px;
+    background: #f3f4f6;
+    border: 1px solid #e5e7eb;
     font-size: 0.95rem;
 }
 
 #playSound {
-    padding: 10px 18px;
-    background: #667eea;
-    color: white;
-    border: none;
-    border-radius: 20px;
+    padding: 7px 14px;
+    border-radius: 999px;
+    border: 1px solid #2563eb;
+    background: #2563eb;
+    color: #ffffff;
     font-size: 0.95rem;
     cursor: pointer;
-    transition: all 0.3s ease;
+    transition: background 0.15s ease, transform 0.1s ease, box-shadow 0.15s ease;
 }
 
 #playSound:hover {
-    background: #5a6fd8;
-    transform: scale(1.03);
+    background: #1d4ed8;
+    transform: translateY(-1px);
+    box-shadow: 0 2px 8px rgba(37, 99, 235, 0.4);
 }
 
-#score, #bestScore {
-    font-weight: bold;
-    color: #667eea;
+#score,
+#bestScore {
+    font-weight: 600;
+    color: #111827;
 }
 
-/* Feedback */
-
+/* --------- Feedback --------- */
 #feedback {
+    margin-top: 8px;
+    min-height: 22px;
     text-align: center;
-    margin-top: 15px;
-    font-size: 1.05rem;
-    font-weight: bold;
-    min-height: 28px;
+    font-size: 1rem;
+    font-weight: 600;
 }
 
 .feedback-correct {
-    color: #4CAF50;
+    color: #16a34a;
 }
 
 .feedback-incorrect {
-    color: #f44336;
+    color: #dc2626;
 }
 
-/* Footer */
-
+/* --------- Footer --------- */
 footer {
-    padding: 8px 10px;
-    font-size: 0.8rem;
-    color: #f1f1f1;
+    margin-top: 10px;
     text-align: center;
+    font-size: 0.8rem;
+    color: #6b7280;
 }
 
-/* Responsive */
-
+/* --------- Responsive --------- */
 @media (max-width: 768px) {
     .container {
-        padding: 12px;
+        margin: 12px auto;
+        padding: 10px;
     }
 
     h1 {
-        font-size: 1.8rem;
+        font-size: 1.7rem;
     }
 
     .voice-panel {
@@ -286,11 +303,5 @@ footer {
     .game-controls {
         flex-direction: column;
         align-items: flex-start;
-        gap: 8px;
-    }
-
-    .cards-grid {
-        grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
-        gap: 12px;
     }
 }
